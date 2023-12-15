@@ -1,38 +1,69 @@
-//alert();
+//Practica para segunda preentrega
 
-let vidaSpiderman = 100;
-let vidaIronman = 100;
+let tamaño = prompt("Ingrese el tamaño del foami que busca");
+let modelo = prompt("Ingrese el modelo de foami que busca");
+let color = prompt("Ingrese el color de foami que busca");
+let precio = prompt("Ingrese precio estimado que busca");
 
-const MIN_POWER = 5;
-const MAX_POWER = 25;
-
-while (vidaSpiderman > 0 && vidaIronman > 0){
-    let golpeSpiderman = Math.ceil(Math.random() * (MAX_POWER - MIN_POWER) + MIN_POWER);
-    let golpeIronman = Math.ceil(Math.random() * (MAX_POWER - MIN_POWER) + MIN_POWER);
-
-    console.log("------------------------------------");
-
-    if (golpeSpiderman > golpeIronman) {
-        console.log("Spiderman ataca con un golpe de " + golpeSpiderman);
-        vidaIronman -= golpeSpiderman;
-        if (vidaIronman < 0){
-            vidaIronman = 0;
-        }
-        console.log("La vida de Ironman baja a " + vidaIronman);
-}   else {
-        console.log("Ironman ataca con un golpe de " + golpeIronman);
-        vidaSpiderman -= golpeIronman;
-        if (vidaSpiderman < 0){
-            vidaSpiderman = 0;
-        }
-        console.log("La vida de Spiderman baja a " + vidaSpiderman);
-}
+const datosBusqueda = {
+    tamaño: tamaño,
+    modelo: modelo,
+    color: color,
+    precio: precio,
 }
 
-console.log("------------------GANADOR------------------");
-
-if(vidaSpiderman > 0){
-    console.log("Gano Spiderman")
-} else {
-    console.log("Gano Ironman");
+function mostrarFoamis(foamis){
+    foamis.forEach((foami) =>{
+        let respuesta = document.querySelector("ul");
+        respuesta.innerHTML += (foami.modelo + " - " + foami.tamaño + " - " + foami.color + " - " + foami.precio)
+    });
 }
+
+function filtrarTamaño (foami) {
+    if (datosBusqueda.tamaño) {
+        return foami.tamaño === datosBusqueda.tamaño;
+    }else {
+        return foami;
+    }
+};
+
+function filtrarModelo (foami) {
+    if (datosBusqueda.modelo) {
+        return foami.modelo === datosBusqueda.modelo;
+    }else {
+        return foami;
+    }
+};
+
+function filtrarColor (foami) {
+    if (datosBusqueda.color) {
+        return foami.color === datosBusqueda.color;
+    }else {
+        return foami;
+    }
+};
+
+function filtrarPrecio (foami) {
+    if (datosBusqueda.precio) {
+        return foami.precio === datosBusqueda.precio;
+    }else {
+        return foami;
+    }
+};
+
+function filtrarFoamis() {
+    const resultado = foamis.filter(filtrarTamaño)
+    .filter(filtrarModelo)
+    .filter(filtrarColor)
+    .filter(filtrarPrecio);
+
+    if(resultado.length>0)
+    {
+        mostrarFoamis(resultado);
+    }else {
+        alert("No se encontraron foamis con esas caracteristicas")
+    }
+    
+}
+ 
+filtrarFoamis();
